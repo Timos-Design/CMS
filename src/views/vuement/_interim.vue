@@ -1,14 +1,48 @@
 <template>
   <div class="view-vuement-interim">
-    <router-view />
+    <CMSHeader project="vuement" />
+
+    <div class="view-vuement-interim-wrapper">
+      <p v-if="error">{{ error }}</p>
+      <vm-spinner v-else-if="loading"></vm-spinner>
+
+      <vm-revealer>
+        <router-view v-if="!loading" />
+      </vm-revealer>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import CMSHeader from '@/components/CMSHeader.vue';
 import { Vue, Component } from 'vue-property-decorator';
+import backend from '@/utils/backend';
 
-@Component
-export default class VuementInterim extends Vue {}
+@Component({
+  components: {
+    CMSHeader,
+  },
+})
+export default class VuementInterim extends Vue {
+  public error = null;
+  public loading = true;
+
+  created(): void {
+    if (this.$store.getters.vmComponents.length === 0) {
+      backend
+        .get('vuement/component')
+        .then(({ data }) => {
+          this.$store.commit('vmComponents', data);
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.error = err;
+        });
+    } else {
+      this.loading = false;
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

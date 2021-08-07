@@ -3,13 +3,15 @@
     <h1>CMS. <span>Manage projects of Timo's Design</span></h1>
     <br />
     <vm-grid width="180px">
-      <vm-card v-for="p in projects" :key="p.name" :routeName="p.route">
+      <vm-card
+        v-for="p in $store.getters.projects"
+        :key="p.name"
+        :routeName="p.route"
+      >
         <vm-flow flow="column">
           <img :src="p.website + '/pwa/splash/manifest-icon-512.png'" alt="" />
           <br />
           <vm-title :title="p.name" />
-          <vm-spacer />
-          <vm-link :href="p.website">Go to Website</vm-link>
         </vm-flow>
       </vm-card>
     </vm-grid>
@@ -33,35 +35,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class Home extends Vue {
-  public projects = [
-    {
-      name: 'Portfolio',
-      website: 'https://timos.design',
-      route: 'portfolio',
-    },
-    {
-      name: 'Newsroom',
-      website: 'https://newsroom.timos.design',
-      route: 'newsroom',
-    },
-    {
-      name: 'Vuement',
-      website: 'https://vuement.com',
-      route: 'vuement',
-    },
-    {
-      name: 'Icons',
-      website: 'https://icons.timos.design',
-      route: 'icons',
-    },
-    {
-      name: 'Translator',
-      website: 'https://translator.timos.design',
-      route: 'translator',
-    },
-  ];
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -70,6 +44,9 @@ export default class Home extends Vue {
     $scale: 60px;
     height: $scale;
     border-radius: #{$scale / 4};
+  }
+  .vm-title {
+    font-size: 0.8rem;
   }
 }
 </style>

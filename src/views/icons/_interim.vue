@@ -1,13 +1,19 @@
 <template>
   <div class="view-icons-interim">
+    <CMSHeader project="icons" />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
+import CMSHeader from '@/components/CMSHeader.vue';
 import { Vue, Component } from 'vue-property-decorator';
 
-@Component
+@Component({
+  components: {
+    CMSHeader,
+  },
+})
 export default class IconsInterim extends Vue {}
 </script>
 

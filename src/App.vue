@@ -87,11 +87,25 @@ h1 span {
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   padding-top: calc(70px + env(safe-area-inset-top));
 
-  max-width: 900px;
+  max-width: $max-width;
   margin: 0 auto;
+}
+
+[cursor] {
+  cursor: pointer;
 }
 
 [center] {
   text-align: center;
+}
+
+[class$='-interim'] {
+  max-width: unset;
+  margin: 0;
+  & > [class^='view-'] {
+    max-width: $max-width;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
 }
 </style>

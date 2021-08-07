@@ -70,6 +70,22 @@ const router = new VueRouter({
             title: 'Vuement',
           },
         },
+        {
+          path: 'component/register',
+          name: 'vuement-register-component',
+          component: () => import('@/views/vuement/RegisterComponent.vue'),
+          meta: {
+            title: 'Vuement - Register Component',
+          },
+        },
+        {
+          path: 'component/:id',
+          name: 'vuement-edit-component',
+          component: () => import('@/views/vuement/EditComponent.vue'),
+          meta: {
+            title: 'Vuement - Edit Component',
+          },
+        },
         { path: '*', redirect: { name: 'vuement' } },
       ],
     },

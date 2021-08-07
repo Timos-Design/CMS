@@ -4,11 +4,13 @@ import VueRouter, { Route } from 'vue-router';
 import { TDUser } from './interfaces/auth.interfaces';
 
 export class Auth {
-  private static lsKey = 'timos-cms-auth';
+  public static readonly lsKey = 'timos-cms-auth';
+  private static toRoute: Route | null = null;
 
   public static register(router: VueRouter, loginView: string): void {
     router.beforeEach((to, _, next) => {
       if (to.name !== loginView && this.isAuthRoute(to) && !this.isSignedIn) {
+        this.toRoute = to;
         next({ name: loginView });
       } else {
         next();
@@ -51,7 +53,15 @@ export class Auth {
       store.commit('signIn', user);
       localStorage.setItem(this.lsKey, token);
       console.log('login success');
-      router.push({ name: 'home' });
+      if (!this.toRoute) {
+        router.push({ name: 'home' });
+        return;
+      }
+      const { name, params } = this.toRoute;
+      router.push({
+        name: name + '',
+        params: params,
+      });
     } else {
       console.log(user);
     }
