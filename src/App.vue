@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <vm-notification />
     <CMSNavbar />
     <CMSRouter />
     <CMSUpdateAvailable v-model="updateAvailable" @refresh="refresh" />

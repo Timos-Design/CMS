@@ -60,5 +60,21 @@ export default new Vuex.Store({
     vmComponents(state: any, vmComponents: VMComponent[]) {
       state.vmComponents = vmComponents;
     },
+    vmComponent(state: any, vmComponent: VMComponent) {
+      let exists = false;
+      state.vmComponents = state.vmComponents.map((x: VMComponent) => {
+        if (x.id === vmComponent.id) {
+          exists = true;
+          return vmComponent;
+        }
+        return x;
+      });
+      if (!exists) state.vmComponents.push(vmComponent);
+    },
+    vmComponentRemove(state: any, id: string) {
+      state.vmComponents = state.vmComponents.filter(
+        (x: VMComponent) => x.id !== id
+      );
+    },
   },
 });

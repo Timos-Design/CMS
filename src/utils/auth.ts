@@ -31,20 +31,28 @@ export class Auth {
   }
 
   private static async validate(token: string): Promise<boolean> {
-    try {
-      await fetch('https://api.timos.design/auth/valid', {
+    return new Promise((resolve) => {
+      fetch('https://api.timos.design/auth/valid', {
         method: 'POST',
         mode: 'cors',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      this.persistLogin(token);
-      return true;
-    } catch (error) {
-      this.signOut();
-      return false;
-    }
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            this.persistLogin(token);
+            resolve(true);
+            return;
+          }
+          this.signOut();
+          resolve(false);
+        })
+        .catch(() => {
+          this.signOut();
+          resolve(false);
+        });
+    });
   }
 
   private static persistLogin(token: string): void {
@@ -52,7 +60,6 @@ export class Auth {
     if (user.group.toLowerCase() === 'admin') {
       store.commit('signIn', user);
       localStorage.setItem(this.lsKey, token);
-      console.log('login success');
       if (!this.toRoute) {
         router.push({ name: 'home' });
         return;
@@ -62,8 +69,6 @@ export class Auth {
         name: name + '',
         params: params,
       });
-    } else {
-      console.log(user);
     }
   }
 
