@@ -90,18 +90,18 @@ const router = new VueRouter({
       ],
     },
     {
-      path: '/icons',
-      component: () => import('@/views/icons/_interim.vue'),
+      path: '/vuecons',
+      component: () => import('@/views/vuecons/_interim.vue'),
       children: [
         {
           path: '',
-          name: 'icons',
-          component: () => import('@/views/icons/Home.vue'),
+          name: 'vuecons',
+          component: () => import('@/views/vuecons/Home.vue'),
           meta: {
-            title: 'Icons',
+            title: 'Vuecons',
           },
         },
-        { path: '*', redirect: { name: 'icons' } },
+        { path: '*', redirect: { name: 'vuecons' } },
       ],
     },
     {

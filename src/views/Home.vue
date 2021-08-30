@@ -1,6 +1,7 @@
 <template>
   <div class="view-home">
-    <h1>CMS. <span>Manage projects of Timo's Design</span></h1>
+    <h1>CMS. <span>Manage projects of Timo's Design.</span></h1>
+
     <br />
     <vm-grid width="180px">
       <vm-card

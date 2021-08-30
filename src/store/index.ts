@@ -27,9 +27,9 @@ export default new Vuex.Store({
         route: 'vuement',
       },
       {
-        name: 'Icons',
-        website: 'https://icons.timos.design',
-        route: 'icons',
+        name: 'Vuecons',
+        website: 'https://vuecons.timos.design',
+        route: 'vuecons',
       },
       {
         name: 'Translator',
