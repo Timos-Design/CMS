@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { TDUser } from '@/utils/interfaces/auth.interfaces';
+import { Vuecon } from '@/utils/interfaces/vuecons.interface';
 import { VMComponent } from '@/utils/interfaces/vuement.interfaces';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -38,6 +39,7 @@ export default new Vuex.Store({
       },
     ],
     vmComponents: [] as VMComponent[],
+    vuecons: [] as Vuecon[],
   },
   getters: {
     user: (state: any): TDUser | null => {
@@ -48,6 +50,9 @@ export default new Vuex.Store({
     },
     vmComponents: (state: any): VMComponent[] => {
       return state.vmComponents;
+    },
+    vuecons: (state: any): Vuecon[] => {
+      return state.vuecons;
     },
   },
   mutations: {
@@ -75,6 +80,23 @@ export default new Vuex.Store({
       state.vmComponents = state.vmComponents.filter(
         (x: VMComponent) => x.id !== id
       );
+    },
+    vuecons(state: any, vuecons: Vuecon[]) {
+      state.vuecons = vuecons;
+    },
+    vuecon(state: any, vuecon: Vuecon) {
+      let exists = false;
+      state.vuecons = state.vuecons.map((x: Vuecon) => {
+        if (x.id === vuecon.id) {
+          exists = true;
+          return vuecon;
+        }
+        return x;
+      });
+      if (!exists) state.vuecons.push(vuecon);
+    },
+    vueconRemove(state: any, id: string) {
+      state.vuecons = state.vuecons.filter((x: Vuecon) => x.id !== id);
     },
   },
 });

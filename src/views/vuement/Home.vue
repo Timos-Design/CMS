@@ -3,11 +3,12 @@
     <h1>Components. <span>Edit or Remove</span></h1>
 
     <vm-flow>
-      <vm-input v-model="query" placeholder="Search..."></vm-input>
+      <vm-input v-model="query" placeholder="Search..." />
       <vm-flow>
         <vm-button
           icon="ti-plus"
           :round="true"
+          title="register"
           routeName="vuement-register-component"
         />
       </vm-flow>

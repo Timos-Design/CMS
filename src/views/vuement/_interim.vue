@@ -4,7 +4,10 @@
 
     <div class="view-vuement-interim-wrapper">
       <p v-if="error">{{ error }}</p>
-      <vm-spinner v-else-if="loading"></vm-spinner>
+      <vm-flow flow="column" v-else-if="loading">
+        <br />
+        <vm-spinner />
+      </vm-flow>
 
       <vm-revealer>
         <router-view v-if="!loading" />
