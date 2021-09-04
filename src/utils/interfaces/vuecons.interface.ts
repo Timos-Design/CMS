@@ -1,6 +1,8 @@
 export interface Vuecon {
-  id: string;
+  name: string;
   last_modified: number;
   size: number;
   src: string;
+  tags: string[];
+  categories: string[];
 }

@@ -1,9 +1,8 @@
 <template>
   <div class="view-vuement-home">
-    <h1>Components. <span>Edit or Remove</span></h1>
-
+    <br />
     <vm-flow>
-      <vm-input v-model="query" placeholder="Search..." />
+      <vm-title subtitle="Overview" title="Components" />
       <vm-flow>
         <vm-button
           icon="ti-plus"
@@ -13,9 +12,7 @@
         />
       </vm-flow>
     </vm-flow>
-
     <br />
-    <vm-divider />
 
     <vm-list>
       <vm-list-item
@@ -25,7 +22,7 @@
         :to="{ name: 'vuement-edit-component', params: { id: c.id } }"
       >
         <div class="comp-img" slot="media">
-          <img v-if="c.image" :src="c.image" alt="" />
+          <img v-if="c.image && c.image !== 'todo'" :src="c.image" alt="" />
         </div>
       </vm-list-item>
     </vm-list>
@@ -41,7 +38,9 @@ import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class VuementHome extends Vue {
-  public query = '';
+  get query(): string {
+    return this.$store.state.vuementQuery;
+  }
 
   get comps(): VMComponent[] {
     return (this.$store.getters.vmComponents as VMComponent[])

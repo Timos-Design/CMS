@@ -68,6 +68,7 @@ const router = new VueRouter({
           component: () => import('@/views/vuement/Home.vue'),
           meta: {
             title: 'Vuement',
+            searchBar: 'vuementQuery',
           },
         },
         {
@@ -99,6 +100,7 @@ const router = new VueRouter({
           component: () => import('@/views/vuecons/Home.vue'),
           meta: {
             title: 'Vuecons',
+            searchBar: 'vueconsQuery',
           },
         },
         { path: '*', redirect: { name: 'vuecons' } },

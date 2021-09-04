@@ -39,7 +39,9 @@ export default new Vuex.Store({
       },
     ],
     vmComponents: [] as VMComponent[],
+    vuementQuery: '',
     vuecons: [] as Vuecon[],
+    vueconsQuery: '',
   },
   getters: {
     user: (state: any): TDUser | null => {
@@ -87,7 +89,7 @@ export default new Vuex.Store({
     vuecon(state: any, vuecon: Vuecon) {
       let exists = false;
       state.vuecons = state.vuecons.map((x: Vuecon) => {
-        if (x.id === vuecon.id) {
+        if (x.name === vuecon.name) {
           exists = true;
           return vuecon;
         }
@@ -95,8 +97,8 @@ export default new Vuex.Store({
       });
       if (!exists) state.vuecons.push(vuecon);
     },
-    vueconRemove(state: any, id: string) {
-      state.vuecons = state.vuecons.filter((x: Vuecon) => x.id !== id);
+    vueconRemove(state: any, name: string) {
+      state.vuecons = state.vuecons.filter((x: Vuecon) => x.name !== name);
     },
   },
 });

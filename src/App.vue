@@ -116,4 +116,20 @@ h1 {
     padding-top: 20px;
   }
 }
+
+.grid-move,
+.grid-enter-active {
+  transition: all 0.5s ease-in-out !important;
+}
+.grid-leave-active {
+  transition: all 0.2s ease-in-out !important;
+}
+.grid-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.grid-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
 </style>

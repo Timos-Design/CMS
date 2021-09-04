@@ -1,6 +1,6 @@
 <template>
   <div class="view-home">
-    <h1>CMS. <span>Manage projects of Timo's Design.</span></h1>
+    <vm-title subtitle="Manage" title="Projects of Timo's Design" />
 
     <br />
     <vm-grid width="180px">
@@ -18,7 +18,7 @@
     </vm-grid>
 
     <br />
-    <h1>Misc. <span>General services for every project</span></h1>
+    <vm-title subtitle="General" title="Services" />
     <br />
     <vm-grid width="180px">
       <vm-card>
@@ -42,12 +42,14 @@ export default class Home extends Vue {}
 <style lang="scss" scoped>
 .view-home {
   img {
-    $scale: 60px;
+    $scale: 50px;
     height: $scale;
     border-radius: #{$scale / 4};
   }
-  .vm-title {
-    font-size: 0.8rem;
+  .vm-card {
+    .vm-title {
+      font-size: 0.7rem;
+    }
   }
 }
 </style>

@@ -1,27 +1,31 @@
 <template>
   <div class="view-vuecons-home">
-    <h1>Icons. <span>Edit or Remove</span></h1>
-
+    <br />
     <vm-flow>
-      <vm-input v-model="query" placeholder="Search..." />
+      <vm-title subtitle="Overview" title="Vuecons" />
       <vm-flow>
         <vm-button icon="ti-upload" title="upload" :round="true" />
       </vm-flow>
     </vm-flow>
-
     <br />
-    <vm-divider />
-
-    <vm-list>
-      <vm-list-item v-for="i in icons" :key="i.id" :title="i.id">
-        <div class="comp-img" slot="media">
-          <img :src="i.src" alt="" />
-        </div>
-      </vm-list-item>
-    </vm-list>
-    <p v-if="$store.getters.vuecons.length > 0 && icons.length === 0">
-      Nothing found
-    </p>
+    <div class="grid-wrapper">
+      <vm-title
+        v-if="icons.length === 0"
+        subtitle="no results for"
+        :title="`'${query}'`"
+      />
+      <transition-group name="grid" class="icon-grid">
+        <router-link
+          v-for="i in icons"
+          :key="i.name"
+          :to="{ name: 'home', params: { icon: i.name } }"
+          class="grid-item"
+          :title="i.name"
+        >
+          <img :src="i.src" :alt="i.name" height="20" />
+        </router-link>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -31,12 +35,14 @@ import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class VueconsHome extends Vue {
-  public query = '';
+  get query(): string {
+    return this.$store.state.vueconsQuery;
+  }
 
   get icons(): Vuecon[] {
     return (this.$store.getters.vuecons as Vuecon[]).filter((x) => {
       if (this.query.length > 0) {
-        return x.id.includes(this.query.toLowerCase().split(' ').join('-'));
+        return x.name.includes(this.query.toLowerCase().split(' ').join('-'));
       }
       return true;
     });
@@ -46,17 +52,40 @@ export default class VueconsHome extends Vue {
 
 <style lang="scss" scoped>
 .view-vuecons-home {
-  .comp-img {
-    height: 20px;
-    width: 20px;
-    background: rgba(var(--vm-primary), 1);
+  .grid-wrapper {
+    padding: 20px;
+    background: rgba(var(--vm-paragraph), 1);
     border-radius: $border-radius;
-    padding: 10px;
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: contain;
-      filter: invert(100%);
+    .vm-title {
+      height: 4rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .icon-grid {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+
+      .grid-item {
+        display: grid;
+        place-content: center;
+        border-radius: 25%;
+        height: 3rem;
+        width: 3rem;
+        color: inherit;
+        text-transform: capitalize;
+        text-decoration: none;
+        font-size: 1.3rem;
+        box-shadow: inset 0 0 0 2px rgba(var(--vm-border), 1),
+          2px 4px 8px rgba(#111, 0.08);
+        transition: 0.174s ease-in-out;
+        &:hover {
+          background: rgba(var(--vm-background), 1);
+          transform: scale(1.1);
+        }
+      }
     }
   }
 }

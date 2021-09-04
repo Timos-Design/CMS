@@ -1,33 +1,15 @@
 import router from '@/router';
 import store from '@/store';
-import VueRouter, { Route } from 'vue-router';
+import { Route } from 'vue-router';
 import { TDUser } from './interfaces/auth.interfaces';
 
 export class Auth {
-  public static readonly lsKey = 'timos-cms-auth';
-  private static toRoute: Route | null = null;
+  public static readonly lsKey = 'cms.timos.design';
+  public static toRoute: Route | null = null;
 
-  public static register(router: VueRouter, loginView: string): void {
-    router.beforeEach((to, _, next) => {
-      if (to.name !== loginView && this.isAuthRoute(to) && !this.isSignedIn) {
-        this.toRoute = to;
-        next({ name: loginView });
-      } else {
-        next();
-      }
-    });
-
-    const token = localStorage.getItem(this.lsKey);
-    if (token) this.validate(token);
-  }
-
-  private static isAuthRoute(route: Route): boolean {
-    return route.name !== 'login';
-    //  route.meta && route.meta.auth;
-  }
-
-  private static get isSignedIn(): boolean {
-    return !!store.getters.user;
+  public static register(): void {
+    const token = localStorage.getItem(Auth.lsKey);
+    if (token) Auth.validate(token);
   }
 
   private static async validate(token: string): Promise<boolean> {
@@ -41,34 +23,33 @@ export class Auth {
       })
         .then((res) => {
           if (res.status === 200) {
-            this.persistLogin(token);
+            Auth.persistLogin(token);
             resolve(true);
             return;
           }
-          this.signOut();
+          Auth.signOut();
           resolve(false);
         })
         .catch(() => {
-          this.signOut();
+          Auth.signOut();
           resolve(false);
         });
     });
   }
 
   private static persistLogin(token: string): void {
-    const user = this.extractUser(token);
-    if (user.group.toLowerCase() === 'admin') {
+    const user = Auth.extractUser(token);
+
+    if (user && user.group && user.group.toLowerCase() === 'admin') {
       store.commit('signIn', user);
-      localStorage.setItem(this.lsKey, token);
-      if (!this.toRoute) {
-        router.push({ name: 'home' });
-        return;
-      }
-      const { name, params } = this.toRoute;
-      router.push({
-        name: name + '',
-        params: params,
-      });
+      localStorage.setItem(Auth.lsKey, token);
+      if (this.toRoute) {
+        const { name, params } = this.toRoute;
+        // eslint-disable-next-line
+        router.push({ name: name!, params: params }).then(() => {
+          this.toRoute = null;
+        });
+      } else router.push({ name: 'home' });
     }
   }
 
@@ -80,7 +61,7 @@ export class Auth {
 
   public static signOut(): void {
     store.commit('signOut');
-    localStorage.removeItem(this.lsKey);
+    localStorage.removeItem(Auth.lsKey);
     router.push({ name: 'login' });
   }
 
@@ -92,7 +73,7 @@ export class Auth {
       const key = 'token=';
       if (e.data && String(e.data).startsWith(key)) {
         const token = String(e.data).substring(key.length);
-        this.validate(token);
+        Auth.persistLogin(token);
       }
     };
   }

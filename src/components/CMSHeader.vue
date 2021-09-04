@@ -1,5 +1,9 @@
 <template>
-  <div class="cms-header" v-if="project">
+  <div
+    class="cms-header"
+    v-if="project"
+    :class="{ 'search-bar': $route.meta.searchBar }"
+  >
     <div class="content">
       <vm-flow>
         <vm-flow @click="goHome" cursor>
@@ -45,6 +49,10 @@ export default class CMSHeader extends Vue {
   background: rgba(var(--vm-container), 1);
   margin: -20px -5vw;
   padding: 20px 5vw;
+
+  &.search-bar {
+    margin-top: 24.33px;
+  }
 
   .content {
     max-width: $max-width;

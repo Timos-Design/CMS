@@ -5,12 +5,14 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import { Auth } from './utils/auth';
+import { NavigationManager } from './utils/NavigationManager';
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuement);
 
-Auth.register(router, 'login');
+Auth.register();
+NavigationManager.register(router);
 
 new Vue({
   router,
