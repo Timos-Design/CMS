@@ -1,4 +1,2 @@
 export const backendUrl = 'https://api.timos.design';
-
-// eslint-disable-next-line
-export const NOOP = () => {};
+// export const backendUrl = 'http://localhost:3000';

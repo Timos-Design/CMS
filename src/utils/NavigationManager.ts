@@ -4,7 +4,7 @@ import { Auth } from './auth';
 
 export class NavigationManager {
   public static register(router: VueRouter): void {
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to, _, next) => {
       const { name } = to;
       const signedIn = !!store.getters.user;
 

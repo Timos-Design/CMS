@@ -103,6 +103,14 @@ const router = new VueRouter({
             searchBar: 'vueconsQuery',
           },
         },
+        {
+          path: 'upload',
+          name: 'vuecons-upload',
+          component: () => import('@/views/vuecons/Upload.vue'),
+          meta: {
+            title: 'Vuecons - Upload',
+          },
+        },
         { path: '*', redirect: { name: 'vuecons' } },
       ],
     },

@@ -48,7 +48,7 @@ export default class CMSHeader extends Vue {
 .cms-header {
   background: rgba(var(--vm-container), 1);
   margin: -20px -5vw;
-  padding: 20px 5vw;
+  padding: 30px 5vw;
 
   &.search-bar {
     margin-top: 24.33px;
